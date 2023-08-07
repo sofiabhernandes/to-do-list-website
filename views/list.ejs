@@ -1,0 +1,27 @@
+<%- include("header") -%>
+
+    <div class="box" id="heading">
+        <h1><%= listTitle %></h1>
+    </div>
+
+    <div class="box">
+
+        <%#* To delete checked items %>
+        <form method="POST" action="/delete">
+            <% newListItems.forEach(function (item) { %>
+                <div class="item"></div>
+                <input type="checkbox" name="deletedItem" value="<%= item._id %>" onChange="this.form.submit()"> <%#* We can use the "_id" of the item to know which item was checked %>
+                <p><%= item.name %></p>
+								<input type="hidden" name="list" value="<%=listTitle%>"/>
+            </div>
+            <% }); %>
+        </form>
+
+        <%#* To add new items %>
+        <form class="addItems" method="POST" action="/">
+            <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+            <button type="submit" name="list" value="<%=listTitle%>">+</button> <%#*we can use name as the key and value as it's value%>
+        </form>
+    </div>
+
+<%- include("footer") -%>
