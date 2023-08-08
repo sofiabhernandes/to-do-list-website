@@ -134,10 +134,6 @@ app.get('/:theme', (req, res) => {
 	});
 });
 
-app.listen(3001, function() {
-    console.log("Server running on port 3001.");
-});
-
 connectDB.then(() => {
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`);
