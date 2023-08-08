@@ -3,25 +3,21 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const _ = require("lodash");
-
-const uri = "mongodb+srv://sofiabhernandes:7874senha@cluster0.licg8rz.mongodb.net/todolistDB";
-mongoose.connect(uri);
-mongoose.set('bufferCommands', false);
-
-const connectDB = async () => {
-    try {
-      await mongoose.connect("mongodb+srv://sofiabhernandes:7874senha@cluster0.licg8rz.mongodb.net/todolistDB")
-      console.log('MongoDB connected!!')
-    } catch (err) {
-      console.log('Failed to connect to MongoDB', err)
-    }
-}
-
 const app = express();
+const PORT = process.env.PORT || 3000
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 /* Mongoose database */
 // Model and schema for the items
