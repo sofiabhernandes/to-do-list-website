@@ -8,6 +8,15 @@ const uri = "mongodb+srv://sofiabhernandes:7874senha@cluster0.licg8rz.mongodb.ne
 mongoose.connect(uri);
 mongoose.set('bufferCommands', false);
 
+const connectDB = async () => {
+    try {
+      await mongoose.connect("mongodb+srv://sofiabhernandes:7874senha@cluster0.licg8rz.mongodb.net/todolistDB")
+      console.log('MongoDB connected!!')
+    } catch (err) {
+      console.log('Failed to connect to MongoDB', err)
+    }
+}
+
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -127,4 +136,10 @@ app.get('/:theme', (req, res) => {
 
 app.listen(3001, function() {
     console.log("Server running on port 3001.");
+});
+
+connectDB.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Listening on port ${PORT}`);
+    })
 });
